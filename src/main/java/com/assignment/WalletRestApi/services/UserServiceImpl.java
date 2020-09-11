@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 		user.setWalletAmount(defWalletAmount);
 		this.userDao.save(user);
 		
-		return null;
+		return "SignUp Successful";
 	}
 
 
@@ -173,6 +173,26 @@ public class UserServiceImpl implements UserService {
 			return "This Transaction cannot be reversed";
 		}
 		
+	}
+
+
+	@Override
+	public String userSignin(Users user) {
+		if(user.getUserName() == null) {
+			return "Username cannot be null";
+		}
+		if(user.getPassword() == null) {
+			return "Password cannot be null";
+		}
+		
+		for(Users u:this.userDao.findAll()) {
+			if(u.getUserName().equals(user.getUserName())) {
+				if(u.getPassword().equals(user.getPassword())) {
+					return "logged in successfully";
+				}
+			}
+		}
+		return "User not registered";
 	}
 
 }
